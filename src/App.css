@@ -1,0 +1,1041 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  /* Slightly see-through, no backdrop blur (blur is costly while scrolling on phones) */
+  background: rgba(11, 15, 23, 0.92);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  min-height: 64px;
+  padding-block: 12px;
+}
+
+.brand {
+  color: var(--text-h);
+  font-weight: 700;
+}
+
+.nav nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+
+.nav nav a {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.nav nav a:hover {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+/* Current section: brighter text with a navy underline */
+.nav nav a.active {
+  color: var(--text-h);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+/* Hero highlights */
+.highlights {
+  list-style: none;
+  margin: 48px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.highlights li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.highlights div {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.highlights strong {
+  color: var(--text-h);
+}
+
+.highlights span:not(.highlight-icon) {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-strong);
+  color: #fff;
+}
+
+/* Galaxy background: fixed layer behind everything */
+.galaxy {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  background:
+    radial-gradient(ellipse 60% 45% at 85% 15%, rgba(30, 58, 138, 0.28), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 10% 75%, rgba(76, 52, 140, 0.2), transparent 70%),
+    var(--bg);
+}
+
+.galaxy canvas {
+  display: block;
+  width: 100%;
+}
+
+.twinkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(185, 200, 255, 0.7);
+  opacity: 0.2;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Fewer twinkling stars on phones */
+@media (max-width: 600px) {
+  .twinkle:nth-child(n + 8) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twinkle {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* Hero */
+.hero {
+  padding: 96px 0 64px;
+}
+
+/* Mobile: one-row scrollable menu, tighter spacing */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .nav-inner {
+    min-height: 0;
+    padding-block: 10px;
+  }
+
+  .nav nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav nav a {
+    flex-shrink: 0;
+    padding-block: 6px;
+  }
+
+  .hero {
+    padding: 56px 0 40px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: 40px 0;
+    scroll-margin-top: 96px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  max-width: 600px;
+  font-size: 18px;
+  margin: 20px 0 32px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-h);
+  font-weight: 500;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* Sections */
+.section {
+  padding: 56px 0;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 64px;
+}
+
+/* Extra room so the email button sits mid-screen at the bottom of the page,
+   keeping the monster's punch visible while a visitor starts scrolling up */
+#contact {
+  min-height: 80vh;
+}
+
+/* Simple fade-up as each section enters the screen */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 28px;
+}
+
+.text {
+  max-width: 680px;
+  margin: 0 0 24px;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Project cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.project-shot {
+  display: block;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.project-shot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.project-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: 60% center;
+}
+
+.project-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: var(--accent-strong);
+  color: #fff;
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-top: 8px;
+}
+
+.subtitle {
+  color: var(--accent);
+  font-size: 14px;
+  margin: 4px 0 16px;
+}
+
+.card ul {
+  margin: 0 0 20px;
+  padding-left: 18px;
+  font-size: 15px;
+  flex-grow: 1;
+}
+
+.card li + li {
+  margin-top: 6px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Awards & education */
+/* Education timeline: vertical line with a dot per school */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 28px;
+  border-left: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.timeline li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline li::before {
+  content: '';
+  position: absolute;
+  left: -36px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--accent);
+}
+
+.timeline strong {
+  color: var(--text-h);
+  font-size: 17px;
+}
+
+/* Awards: trophy pops in, then each award's icon pops and its text slides in */
+.section-title.with-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-icon {
+  display: inline-flex;
+  color: var(--accent);
+  transform: scale(0) rotate(-25deg);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+}
+
+.award-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.award-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.award-item.featured {
+  padding: 20px;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.award-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--accent-strong);
+  border-radius: 50%;
+  color: var(--accent);
+  transform: scale(0);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(0.35s + var(--i) * 0.12s);
+}
+
+.featured .award-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+}
+
+.award-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
+  transition-delay: calc(0.45s + var(--i) * 0.12s);
+}
+
+.award-text strong {
+  color: var(--text-h);
+}
+
+.awards.is-visible .title-icon,
+.awards.is-visible .award-icon {
+  transform: none;
+}
+
+.awards.is-visible .award-text {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-icon,
+  .award-icon,
+  .award-text {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Skills */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.skill-card {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.skill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.skill-group svg {
+  color: var(--accent);
+}
+
+/* Magnifying glass transition to Projects */
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.lens {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  margin: -100px 0 0 -100px;
+  border: 8px solid var(--accent-strong);
+  border-radius: 50%;
+  background: rgba(124, 150, 240, 0.08);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.lens.show {
+  animation: lens-show 0.8s ease-out forwards;
+}
+
+.lens.grow {
+  animation: lens-grow 0.8s ease-in forwards;
+}
+
+/* Handle */
+.lens::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 100%;
+  width: 56px;
+  height: 14px;
+  margin: -6px 0 0 -10px;
+  border-radius: 7px;
+  background: var(--accent-strong);
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+/* Appear over the small content, then hold briefly */
+@keyframes lens-show {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  55%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Expand past the screen edges while the content grows */
+@keyframes lens-grow {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(var(--zoom-scale));
+    opacity: 0;
+  }
+}
+
+.zoom-content {
+  transform-origin: center top;
+}
+
+.zoom-content.is-small {
+  transform: scale(0.45);
+  opacity: 0.6;
+}
+
+.zoom-content.is-growing {
+  transition:
+    transform 0.8s ease-in-out,
+    opacity 0.8s ease-in-out;
+}
+
+/* Contact monster */
+/* Email button with the monster right beside it */
+.contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px 56px;
+}
+
+.monster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: monster-bob 3s ease-in-out infinite;
+}
+
+/* Pixel-art speech bubble: 4px "pixels", stepped corners and a stepped tail.
+   Box-shadows draw the border so no images are needed. */
+.monster-bubble {
+  --px: 4px;
+  --px-fill: #f1f4fa;
+  --px-line: #7c96f0;
+  position: relative;
+  margin: 8px 8px 20px;
+  padding: 4px 8px;
+  background: var(--px-fill);
+  color: #0b0f17;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow:
+    calc(var(--px) * -1) 0 0 0 var(--px-fill),
+    var(--px) 0 0 0 var(--px-fill),
+    0 calc(var(--px) * -1) 0 0 var(--px-fill),
+    0 var(--px) 0 0 var(--px-fill),
+    calc(var(--px) * -2) 0 0 0 var(--px-line),
+    calc(var(--px) * 2) 0 0 0 var(--px-line),
+    0 calc(var(--px) * -2) 0 0 var(--px-line),
+    0 calc(var(--px) * 2) 0 0 var(--px-line),
+    calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--px-line),
+    var(--px) calc(var(--px) * -1) 0 0 var(--px-line),
+    calc(var(--px) * -1) var(--px) 0 0 var(--px-line),
+    var(--px) var(--px) 0 0 var(--px-line);
+}
+
+/* Tail: starts on the bottom border row and steps down to the left */
+.monster-bubble::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - var(--px));
+  top: calc(100% + var(--px));
+  width: var(--px);
+  height: var(--px);
+  background: var(--px-fill);
+  box-shadow:
+    var(--px) 0 0 0 var(--px-fill),
+    calc(var(--px) * -1) var(--px) 0 0 var(--px-line),
+    0 var(--px) 0 0 var(--px-fill),
+    var(--px) var(--px) 0 0 var(--px-line),
+    calc(var(--px) * -1) calc(var(--px) * 2) 0 0 var(--px-line),
+    0 calc(var(--px) * 2) 0 0 var(--px-line),
+    calc(var(--px) * -1) calc(var(--px) * 3) 0 0 var(--px-line);
+}
+
+.monster.is-happy {
+  animation: monster-hop 0.5s ease-out infinite alternate;
+}
+
+.monster.is-please {
+  animation: monster-tremble 0.25s linear infinite;
+}
+
+.monster.is-angry {
+  animation: none;
+}
+
+.monster-body {
+  transform-origin: center bottom;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Grows big and shakes when the visitor keeps trying to leave */
+.monster.is-angry .monster-body {
+  transform: scale(1.6);
+  animation: monster-shake 0.15s linear infinite;
+}
+
+.monster.is-angry .monster-bubble {
+  --px-fill: #fee2e2;
+  --px-line: #ef4444;
+  color: #7f1d1d;
+  font-weight: 700;
+  transform: translateY(-50px);
+}
+
+.monster-bubble {
+  transition: transform 0.35s;
+}
+
+@keyframes monster-bob {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes monster-hop {
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes monster-tremble {
+  25% {
+    transform: translateX(-1px);
+  }
+  75% {
+    transform: translateX(1px);
+  }
+}
+
+@keyframes monster-shake {
+  0%,
+  100% {
+    transform: scale(1.6) rotate(0);
+  }
+  25% {
+    transform: scale(1.6) rotate(-3deg);
+  }
+  75% {
+    transform: scale(1.6) rotate(3deg);
+  }
+}
+
+/* Peeking monster: rises from the bottom-right edge of the window */
+.peek {
+  position: fixed;
+  right: 24px;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.peek-body {
+  width: 110px;
+  height: 80px; /* shows the top of the monster; the rest stays below the edge */
+  overflow: hidden;
+}
+
+.peek-body svg {
+  display: block;
+  width: 110px;
+  height: auto;
+  transform: translateY(100%);
+  animation: peek-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.peek.is-leaving .peek-body svg {
+  animation: peek-down 0.45s ease-in forwards;
+}
+
+.peek-bubble {
+  max-width: 230px;
+  margin-bottom: 64px;
+  white-space: normal;
+  opacity: 0;
+  animation: peek-bubble-in 0.3s 0.35s ease-out forwards;
+}
+
+.peek.is-leaving .peek-bubble {
+  animation: peek-bubble-out 0.2s ease-in forwards;
+}
+
+/* Tail points right toward the monster for this bubble */
+.peek-bubble::after {
+  left: auto;
+  right: calc(var(--px) * 2);
+}
+
+@keyframes peek-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes peek-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes peek-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes peek-bubble-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .peek {
+    right: 12px;
+  }
+
+  .peek-body,
+  .peek-body svg {
+    width: 84px;
+  }
+
+  .peek-body {
+    height: 61px;
+  }
+
+  .peek-bubble {
+    max-width: 180px;
+    margin-bottom: 48px;
+    font-size: 13px;
+  }
+}
+
+/* Email button squishes while the monster's tongue touches it */
+#contact-email {
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+#contact-email.is-licked {
+  transform: scale(0.95);
+  box-shadow: 0 0 0 4px rgba(228, 111, 155, 0.45);
+}
+
+/* Angry punch: the left arm winds up, then swings down-left into the email button */
+.monster-body .punch-arm {
+  transform-origin: 22px 76px; /* shoulder, in the drawing's units */
+}
+
+.monster-body.is-punching .punch-arm {
+  animation: punch 0.7s ease-in-out;
+}
+
+@keyframes punch {
+  0%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: rotate(15deg);
+  }
+  50%,
+  75% {
+    transform: translate(-10px, 8px) rotate(-75deg);
+  }
+}
+
+/* "Broken" email button: shakes, tilts, cracks, drops chips, and pleads.
+   Purely visual; it stays clickable and mends after a few seconds. */
+#contact-email {
+  position: relative;
+}
+
+#contact-email.is-broken {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M98 20 82 14 72 19 60 7M82 14 76 3M98 20 84 28 73 25 63 37M84 28 88 39M72 19 66 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  filter: brightness(0.85);
+  transform: rotate(-2deg);
+  animation: button-hit 0.4s ease-out;
+}
+
+@keyframes button-hit {
+  0% {
+    transform: none;
+  }
+  20% {
+    transform: translateX(-8px) rotate(-4deg);
+  }
+  45% {
+    transform: translateX(5px) rotate(1deg);
+  }
+  70% {
+    transform: translateX(-3px) rotate(-3deg);
+  }
+  100% {
+    transform: rotate(-2deg);
+  }
+}
+
+/* Chips falling off where the fist landed */
+#contact-email.is-broken::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 45%;
+  width: 6px;
+  height: 6px;
+  background: #1e3a8a;
+  box-shadow:
+    -9px 5px 0 #2747a8,
+    6px -6px 0 #1e3a8a,
+    -3px 11px 0 #7c96f0;
+  animation: chips-fall 0.9s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes chips-fall {
+  to {
+    transform: translate(16px, 48px) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+/* Notes over the broken button, stacked like chat messages: the older one fades */
+.contact-row {
+  position: relative;
+}
+
+.broken-notes {
+  position: absolute;
+  left: 8px;
+  bottom: 64px; /* just above the email button */
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.broken-notes .monster-bubble {
+  margin: 8px 8px 16px;
+  font-weight: 700;
+  animation: note-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.6s;
+}
+
+.broken-notes .monster-bubble.is-old {
+  opacity: 0.4;
+}
+
+@keyframes note-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* Full-screen layer the tongue is drawn on; never blocks clicks */
+.tongue-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monster,
+  .monster.is-happy {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .monster {
+    margin-inline: auto;
+  }
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: 14px;
+}

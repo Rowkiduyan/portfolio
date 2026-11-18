@@ -1,0 +1,51 @@
+:root {
+  --bg: #0b0f17;
+  --surface: #121826;
+  --border: #232b3d;
+  --text: #c9d1e0;
+  --text-h: #f1f4fa;
+  --muted: #8b95a9;
+  --accent: #7c96f0;
+  --accent-strong: #1e3a8a;
+  --accent-hover: #2747a8;
+
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  font: 16px/1.6 var(--sans);
+  color-scheme: dark;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text-h);
+  margin: 0;
+  line-height: 1.2;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

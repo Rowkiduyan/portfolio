@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 4 116 116">
+  <!-- Simplified portfolio monster for the browser tab -->
+  <path d="M38 34 30 8l22 18Z" fill="#1e3a8a" stroke="#7c96f0" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M102 34l8-26-22 18Z" fill="#1e3a8a" stroke="#7c96f0" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M18 72C18 34 44 18 70 18s52 16 52 54v44q-8.5-9-17 0t-17 0-17 0-17 0-17 0Z" fill="#1e3a8a" stroke="#7c96f0" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="52" cy="62" r="15" fill="#f1f4fa"/>
+  <circle cx="88" cy="62" r="15" fill="#f1f4fa"/>
+  <circle cx="52" cy="62" r="7.5" fill="#0b0f17"/>
+  <circle cx="88" cy="62" r="7.5" fill="#0b0f17"/>
+</svg>

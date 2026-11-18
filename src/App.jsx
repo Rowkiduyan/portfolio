@@ -1,0 +1,735 @@
+import { useEffect, useRef, useState } from 'react'
+import ContactMonster from './ContactMonster.jsx'
+import PeekMonster from './PeekMonster.jsx'
+import './App.css'
+
+const LENS_SIZE = 200
+
+const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const links = {
+  email: 'charlesroque0114@gmail.com',
+  linkedin: 'https://www.linkedin.com/in/charles-roque-21177634a/',
+  github: 'https://github.com/Rowkiduyan',
+  resume: '/Roque_Resume.pdf',
+}
+
+const projects = [
+  {
+    title: 'DriveWise',
+    icon: 'sleepy',
+    image: '/projects/drivewise.webp',
+    imageAlt: 'DriveWise supervisor dashboard with a live GPS map and drowsiness alerts',
+    imageSize: [1400, 665],
+    subtitle: 'AI-Powered Driver Drowsiness Monitoring & GPS Tracking',
+    type: 'Academic Capstone Project',
+    date: 'Feb 2026 – Sep 2026',
+    points: [
+      'Developed a fleet monitoring web application using React, Supabase, and Raspberry Pi.',
+      'Implemented drowsiness detection using facial landmarks, EAR, and MAR with automated safety alerts and event logging.',
+      'Built GPS trip tracking, route monitoring, fleet management, and role-based interfaces.',
+    ],
+    tech: ['React', 'Supabase', 'Raspberry Pi'],
+  },
+  {
+    title: 'Each-R',
+    icon: 'records',
+    image: '/projects/eachr.webp',
+    imageAlt: 'Each-R job board with a search bar and job posting cards',
+    imageSize: [1406, 585],
+    subtitle: 'Human Resources Information System',
+    type: 'Academic Capstone Project',
+    date: 'Apr 2025 – Feb 2026',
+    points: [
+      'Developed a full-stack HRIS using React and Supabase to centralize employee records and compliance tracking.',
+      'Implemented automated email notifications using EmailJS to reduce manual HR follow-ups.',
+      'Designed Supabase database structures and deployed the application on DigitalOcean.',
+    ],
+    tech: ['React', 'Supabase', 'EmailJS', 'DigitalOcean'],
+  },
+  {
+    title: 'Pawximity Alert',
+    icon: 'petGps',
+    illustration: true,
+    subtitle: 'A Proximity-Based Pet Vest Alert System',
+    type: 'School Project',
+    date: 'Apr 2025 – May 2025',
+    points: [
+      'Developed a Flutter mobile app with Firebase for GPS-based pet tracking and geofence alerts.',
+      'Integrated ESP32 and NEO-6M GPS hardware for location monitoring.',
+    ],
+    tech: ['Flutter', 'Firebase', 'ESP32', 'NEO-6M GPS'],
+  },
+]
+
+const awards = [
+  {
+    title: '2nd Place – DATAxYOUTH Hackathon',
+    detail: 'UP Diliman, 2025 · Built a data-driven prototype using Philippine flood data.',
+    icon: 'hackathon',
+    featured: true,
+  },
+  {
+    title: "Dean's Lister – First Honors",
+    detail: 'National University – Fairview, 2023–Present',
+    icon: 'medal',
+  },
+  { title: 'DPJO White Scholar', detail: 'National University – Fairview, 2023–2024', icon: 'cap' },
+  { title: 'DMMJ Blue Scholar', detail: 'National University – Fairview, 2024–Present', icon: 'cap' },
+  {
+    icon: 'badge',
+    title: 'DataCamp Certifications',
+    detail: 'Understanding Data Science, Machine Learning, SQL, Data Visualization, Data Engineering, 2025',
+  },
+]
+
+const education = [
+  {
+    school: 'National University – Fairview',
+    degree: 'BS Information Technology, Specialization in Mobile and Internet Technologies',
+    date: '2023 – 2027 · Expected Graduation: 2027',
+  },
+  {
+    school: 'Saint Francis Xavier Catholic School',
+    degree: 'General Academic Strand',
+    date: '2021 – 2023',
+  },
+]
+
+const skills = [
+  {
+    group: 'Frontend',
+    icon: 'code',
+    items: ['HTML', 'CSS', 'JavaScript', 'React', 'Tailwind CSS', 'Responsive Design'],
+  },
+  { group: 'Backend & Database', icon: 'database', items: ['Supabase', 'PostgreSQL', 'Firebase'] },
+  {
+    group: 'Tools',
+    icon: 'wrench',
+    items: ['Git', 'GitHub', 'DigitalOcean', 'System Testing', 'UI/UX Basics'],
+  },
+]
+
+const highlights = [
+  { icon: 'trophy', value: '2nd Place', label: 'DATAxYOUTH Hackathon' },
+  { icon: 'medal', value: "Dean's Lister", label: 'First Honors' },
+  { icon: 'cap', value: 'BSIT 2027', label: 'NU – Fairview' },
+]
+
+const navItems = ['About', 'Projects', 'Awards', 'Education', 'Skills', 'Contact']
+
+// Stroke icons (24×24) used across the page.
+const iconPaths = {
+  code: (
+    <>
+      <path d="m16 18 6-6-6-6" />
+      <path d="m8 6-6 6 6 6" />
+    </>
+  ),
+  database: (
+    <>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+      <path d="M3 12a9 3 0 0 0 18 0" />
+    </>
+  ),
+  wrench: (
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+  ),
+  // Closed eye with "Zz": drowsiness tracking
+  sleepy: (
+    <>
+      <path d="M2 12c2 3 4.5 4.5 7 4.5s5-1.5 7-4.5" />
+      <path d="m4.5 15-1.5 2" />
+      <path d="M9 16.5V19" />
+      <path d="m13.5 15 1.5 2" />
+      <path d="M15 3h4l-4 5h4" />
+      <path d="M20 10h2.5L20 13h2.5" />
+    </>
+  ),
+  // Stacked files with record lines
+  records: (
+    <>
+      <path d="M20 7h-3a2 2 0 0 1-2-2V2" />
+      <path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z" />
+      <path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8" />
+      <path d="M10.5 10h6" />
+      <path d="M10.5 13.5h4" />
+    </>
+  ),
+  // Map pin with a paw print
+  petGps: (
+    <>
+      <path d="M20 10c0 4.99-5.53 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.53 20.19 4 14.99 4 10a8 8 0 0 1 16 0" />
+      <g fill="currentColor" stroke="none">
+        <ellipse cx="12" cy="11.6" rx="2.2" ry="1.8" />
+        <circle cx="9.4" cy="8.9" r="0.95" />
+        <circle cx="11.1" cy="7.3" r="0.95" />
+        <circle cx="12.9" cy="7.3" r="0.95" />
+        <circle cx="14.6" cy="8.9" r="0.95" />
+      </g>
+    </>
+  ),
+  trophy: (
+    <>
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+      <path d="M4 22h16" />
+      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+      <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+    </>
+  ),
+  // Laptop with code brackets
+  hackathon: (
+    <>
+      <rect x="3" y="4" width="18" height="12" rx="2" />
+      <path d="M2 20h20" />
+      <path d="m10 8-2 2 2 2" />
+      <path d="m14 8 2 2-2 2" />
+    </>
+  ),
+  medal: (
+    <>
+      <circle cx="12" cy="8" r="6" />
+      <path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11" />
+    </>
+  ),
+  cap: (
+    <>
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+      <path d="M6 12v5c3 3 9 3 12 0v-5" />
+    </>
+  ),
+  badge: (
+    <>
+      <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+      <path d="m9 12 2 2 4-4" />
+    </>
+  ),
+}
+
+function Icon({ name, size = 24 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {iconPaths[name]}
+    </svg>
+  )
+}
+
+// Drawn preview for Pawximity Alert (no screenshots available): a map with a
+// geofence around home and a pet pin that has left it.
+function PawximityIllustration() {
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      role="img"
+      aria-label="Illustration of Pawximity Alert: a map with a safe zone around home and a pet outside it, triggering an alert"
+    >
+      <rect width="320" height="180" fill="#0f1729" />
+
+      {/* Streets */}
+      <g stroke="#1c2640" strokeLinecap="round">
+        <path d="M0 122h320" strokeWidth="7" />
+        <path d="M92 0v180" strokeWidth="7" />
+        <path d="M170 180 320 44" strokeWidth="7" />
+        <path d="M0 60h320M0 160h320M40 0v180M150 0v180M250 0v180" strokeWidth="2" />
+      </g>
+
+      {/* Safe zone around home */}
+      <circle cx="140" cy="95" r="52" fill="rgba(124,150,240,0.1)" stroke="#7c96f0" strokeWidth="1.5" strokeDasharray="5 4" />
+      <g transform="translate(130 85) scale(0.85)" fill="none" stroke="#f1f4fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1Z" />
+      </g>
+
+      {/* Path the pet took out of the zone */}
+      <path d="M150 90q40-30 82-34" fill="none" stroke="#7c96f0" strokeWidth="1.5" strokeDasharray="2 4" strokeLinecap="round" />
+
+      {/* Pet location pin */}
+      <g transform="translate(220 22) scale(1.4)">
+        <path
+          d="M20 10c0 4.99-5.53 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.53 20.19 4 14.99 4 10a8 8 0 0 1 16 0"
+          fill="#1e3a8a"
+          stroke="#7c96f0"
+          strokeWidth="1.2"
+        />
+        <g fill="#fff">
+          <ellipse cx="12" cy="11.6" rx="2.2" ry="1.8" />
+          <circle cx="9.4" cy="8.9" r="0.95" />
+          <circle cx="11.1" cy="7.3" r="0.95" />
+          <circle cx="12.9" cy="7.3" r="0.95" />
+          <circle cx="14.6" cy="8.9" r="0.95" />
+        </g>
+      </g>
+
+      {/* Alert notification */}
+      <g>
+        <rect x="12" y="12" width="148" height="28" rx="14" fill="#121826" stroke="#232b3d" />
+        <circle cx="28" cy="26" r="4" fill="#f59e0b" />
+        <text x="40" y="29.5" fill="#f1f4fa" fontSize="10" fontWeight="600" fontFamily="Inter, sans-serif">
+          Pet left the safe zone
+        </text>
+      </g>
+
+      <text x="308" y="170" textAnchor="end" fill="#8b95a9" fontSize="9" fontFamily="Inter, sans-serif">
+        Illustration · ESP32 + NEO-6M GPS
+      </text>
+    </svg>
+  )
+}
+
+function Section({ id, title, children }) {
+  return (
+    <section id={id} className="section reveal">
+      <h2 className="section-title">{title}</h2>
+      {children}
+    </section>
+  )
+}
+
+// Center the lens on the (still small) projects content, kept inside the viewport.
+function lensPosition() {
+  const rect = document.getElementById('projects-content').getBoundingClientRect()
+  const margin = LENS_SIZE / 2 + 16
+  const clamp = (v, max) => Math.min(Math.max(v, margin), max - margin)
+  return {
+    x: clamp(rect.left + rect.width / 2, window.innerWidth),
+    // Never below the upper-middle of the screen, so the lens doesn't sit too low.
+    y: clamp(
+      Math.min(rect.top + rect.height / 2, window.innerHeight * 0.42),
+      window.innerHeight,
+    ),
+  }
+}
+
+// Magnifying glass that settles over the small content, then expands out of view
+// while the content grows to full size.
+function ZoomLens({ zoom, onShown, onDone }) {
+  const { x, y, phase } = zoom
+  const farthest = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y),
+  )
+  const scale = (farthest * 2) / LENS_SIZE + 1
+
+  return (
+    <div className="zoom-overlay" aria-hidden="true">
+      <div
+        className={`lens ${phase}`}
+        style={{ left: x, top: y, '--zoom-scale': scale }}
+        onAnimationEnd={phase === 'show' ? onShown : onDone}
+      />
+    </div>
+  )
+}
+
+// A few CSS-twinkling stars (positions in %) on top of the static canvas.
+const twinkles = [
+  [8, 12], [22, 68], [35, 30], [48, 84], [57, 18], [66, 52],
+  [74, 8], [83, 40], [91, 76], [14, 90], [40, 56], [96, 22],
+]
+
+// Galaxy backdrop: stars are drawn once to a canvas (no animation loop) and only
+// redrawn when the width changes, so mobile toolbar show/hide doesn't trigger work.
+function Galaxy() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    let lastWidth = 0
+    let timer
+
+    function draw() {
+      const w = window.innerWidth
+      if (w === lastWidth) return
+      lastWidth = w
+      const h = Math.max(window.innerHeight, window.screen.height)
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.height = `${h}px`
+
+      const ctx = canvas.getContext('2d')
+      ctx.scale(dpr, dpr)
+      // Star count scales with screen area: ~280 on desktop, ~80 on phones.
+      const count = Math.round((w * h) / 4000)
+      for (let i = 0; i < count; i++) {
+        const big = Math.random() > 0.92
+        ctx.globalAlpha = 0.3 + Math.random() * 0.6
+        ctx.fillStyle = Math.random() > 0.8 ? '#b9c8ff' : '#ffffff'
+        ctx.beginPath()
+        ctx.arc(
+          Math.random() * w,
+          Math.random() * h,
+          big ? 0.9 + Math.random() * 0.7 : 0.3 + Math.random() * 0.6,
+          0,
+          Math.PI * 2,
+        )
+        ctx.fill()
+      }
+    }
+
+    function onResize() {
+      clearTimeout(timer)
+      timer = setTimeout(draw, 200)
+    }
+
+    draw()
+    window.addEventListener('resize', onResize)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
+
+  return (
+    <div className="galaxy" aria-hidden="true">
+      <canvas ref={canvasRef} />
+      {twinkles.map(([x, y], i) => (
+        <span
+          key={i}
+          className="twinkle"
+          style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${(i % 6) * 0.7}s` }}
+        />
+      ))}
+    </div>
+  )
+}
+
+function App() {
+  const [reduceMotion] = useState(prefersReducedMotion)
+  // Projects starts small until the zoom has played once.
+  const [played, setPlayed] = useState(reduceMotion)
+  const [zoom, setZoom] = useState(null)
+  // Nav clicks smooth-scroll past Projects; ignore the observer until that scroll ends.
+  const ignoreScrollUntil = useRef(0)
+
+  const [activeSection, setActiveSection] = useState('')
+
+  // Highlight the menu link of the section in the middle of the screen.
+  // Contact is short and can't reach the middle, so the bottom of the page counts as Contact.
+  useEffect(() => {
+    const lastId = navItems.at(-1).toLowerCase()
+    const atBottom = () =>
+      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (atBottom()) return setActiveSection(lastId)
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    navItems.forEach((item) => observer.observe(document.getElementById(item.toLowerCase())))
+
+    let wasAtBottom = false
+    function onScroll() {
+      const bottom = atBottom()
+      if (bottom) {
+        setActiveSection(lastId)
+      } else if (wasAtBottom) {
+        // Leaving the bottom: go back to whichever section is in the middle of the screen.
+        const middle = window.innerHeight / 2
+        const current = navItems
+          .map((item) => document.getElementById(item.toLowerCase()))
+          .find((el) => {
+            const { top, bottom: elBottom } = el.getBoundingClientRect()
+            return top <= middle && elBottom >= middle
+          })
+        if (current) setActiveSection(current.id)
+      }
+      wasAtBottom = bottom
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
+  // Fade each section in the first time it scrolls into view.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    )
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  // Play the zoom the first time the visitor scrolls to Projects.
+  useEffect(() => {
+    if (played) return
+    const target = document.getElementById('projects')
+    let firstCheck = true
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Already in view (or passed) on load: show it at full size without playing.
+        if (firstCheck) {
+          firstCheck = false
+          if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+            setPlayed(true)
+            return
+          }
+        }
+        if (!entry.isIntersecting || entry.time < ignoreScrollUntil.current) return
+        // Wait a moment: a fast scroll can pass straight through Projects.
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          const r = target.getBoundingClientRect()
+          const stillHere = r.top < window.innerHeight * 0.6 && r.bottom > window.innerHeight * 0.4
+          if (!stillHere) return
+          observer.disconnect()
+          setZoom({ ...lensPosition(), phase: 'show' })
+        }, 200)
+      },
+      { rootMargin: '0px 0px -70% 0px' },
+    )
+    let timer
+    observer.observe(target)
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
+  }, [played])
+
+  // If the visitor scrolls away from Projects mid-zoom, drop the lens and show it full size.
+  const zooming = zoom !== null
+  useEffect(() => {
+    if (!zooming) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) return
+      setPlayed(true)
+      setZoom(null)
+    })
+    observer.observe(document.getElementById('projects'))
+    return () => observer.disconnect()
+  }, [zooming])
+
+  function handleNavClick(e, id) {
+    if (id !== 'projects') {
+      ignoreScrollUntil.current = e.timeStamp + 1200
+      return
+    }
+    if (reduceMotion) return
+    e.preventDefault()
+    if (zoom) return
+    const target = document.getElementById('projects')
+    const navHeight = document.querySelector('.nav').offsetHeight
+    window.scrollTo({ top: target.offsetTop - navHeight, behavior: 'instant' })
+    history.replaceState(null, '', '#projects')
+    setZoom({ ...lensPosition(), phase: 'show' })
+  }
+
+  const small = !played || zoom?.phase === 'show'
+  const contentClass = small ? 'is-small' : zoom ? 'is-growing' : ''
+
+  return (
+    <>
+      <Galaxy />
+      <PeekMonster />
+      {zoom && (
+        <ZoomLens
+          zoom={zoom}
+          onShown={() => {
+            setPlayed(true)
+            setZoom((z) => ({ ...z, phase: 'grow' }))
+          }}
+          onDone={() => setZoom(null)}
+        />
+      )}
+
+      <header className="nav">
+        <div className="container nav-inner">
+          <a href="#top" className="brand">Charles Roque</a>
+          <nav>
+            {navItems.map((item) => {
+              const id = item.toLowerCase()
+              return (
+                <a
+                  key={item}
+                  href={`#${id}`}
+                  className={activeSection === id ? 'active' : undefined}
+                  aria-current={activeSection === id ? 'location' : undefined}
+                  onClick={(e) => handleNavClick(e, id)}
+                >
+                  {item}
+                </a>
+              )
+            })}
+          </nav>
+        </div>
+      </header>
+
+      <main id="top" className="container">
+        <section className="hero">
+          <p className="eyebrow">Aspiring Web Developer</p>
+          <h1>Charles Duain T. Roque</h1>
+          <p className="lead">
+            BSIT student from Metro Manila, Philippines, building full-stack web
+            applications with React, JavaScript, and Supabase.
+          </p>
+          <div className="actions">
+            <a className="btn btn-primary" href={links.resume} download="Charles_Roque_Resume.pdf">Download Resume</a>
+            <a className="btn" href={links.github} target="_blank" rel="noreferrer">GitHub</a>
+            <a className="btn" href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+          <ul className="highlights">
+            {highlights.map((h) => (
+              <li key={h.value}>
+                <span className="highlight-icon"><Icon name={h.icon} size={20} /></span>
+                <div>
+                  <strong>{h.value}</strong>
+                  <span>{h.label}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <Section id="about" title="About">
+          <p className="text">
+            BSIT student focused on web development with hands-on experience building
+            full-stack applications using React, JavaScript, and Supabase. Developed an
+            HR management system and a real-time fleet monitoring application with GPS
+            tracking and AI-powered drowsiness detection.
+          </p>
+        </Section>
+
+        <section id="projects" className="section">
+          <div id="projects-content" className={`zoom-content ${contentClass}`}>
+            <h2 className="section-title">Projects</h2>
+            <div className="grid">
+              {projects.map((p) => (
+                <article key={p.title} className="card">
+                  {p.image && (
+                    <a
+                      className="project-shot"
+                      href={p.image}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Open ${p.title} screenshot in full size`}
+                    >
+                      <img
+                        src={p.image}
+                        alt={p.imageAlt}
+                        width={p.imageSize[0]}
+                        height={p.imageSize[1]}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                  )}
+                  {p.illustration && (
+                    <div className="project-shot">
+                      <PawximityIllustration />
+                    </div>
+                  )}
+                  <span className="project-icon"><Icon name={p.icon} size={26} /></span>
+                  <p className="meta">{p.type} · {p.date}</p>
+                  <h3>{p.title}</h3>
+                  <p className="subtitle">{p.subtitle}</p>
+                  <ul>
+                    {p.points.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
+                  <div className="tags">
+                    {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="awards" className="section reveal awards">
+          <h2 className="section-title with-icon">
+            <span className="title-icon"><Icon name="trophy" size={28} /></span>
+            Awards & Certifications
+          </h2>
+          <ul className="award-list">
+            {awards.map((a, i) => (
+              <li
+                key={a.title}
+                className={`award-item${a.featured ? ' featured' : ''}`}
+                style={{ '--i': i }}
+              >
+                <span className="award-icon">
+                  <Icon name={a.icon} size={a.featured ? 28 : 20} />
+                </span>
+                <div className="award-text">
+                  <strong>{a.title}</strong>
+                  <span>{a.detail}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <Section id="education" title="Education">
+          <ul className="timeline">
+            {education.map((e) => (
+              <li key={e.school}>
+                <span className="meta">{e.date}</span>
+                <strong>{e.school}</strong>
+                <span>{e.degree}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section id="skills" title="Skills">
+          <div className="skills">
+            {skills.map(({ group, icon, items }) => (
+              <div key={group} className="skill-card">
+                <h3 className="skill-group">
+                  <Icon name={icon} size={18} />
+                  {group}
+                </h3>
+                <div className="tags">
+                  {items.map((s) => <span key={s} className="tag">{s}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="contact" title="Contact">
+          <p className="text">
+            I'm open to internships and junior web developer roles. Feel free to reach out.
+          </p>
+          <div className="contact-row">
+            <a id="contact-email" className="btn btn-primary" href={`mailto:${links.email}`}>
+              {links.email}
+            </a>
+            <ContactMonster buttonId="contact-email" />
+          </div>
+        </Section>
+      </main>
+
+      <footer className="footer">
+        <div className="container">© 2026 Charles Duain T. Roque</div>
+      </footer>
+    </>
+  )
+}
+
+export default App
