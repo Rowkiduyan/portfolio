@@ -51,7 +51,9 @@ const projects = [
       'Designed Supabase database structures and deployed the application on DigitalOcean.',
     ],
     tech: ['React', 'Supabase', 'EmailJS', 'DigitalOcean'],
-    repo: 'https://github.com/Rowkiduyan/Each-R'
+    repo: 'https://github.com/Rowkiduyan/Each-R',
+    live: 'https://each-r.vercel.app/',
+    
   },
   {
     title: 'Gakuran War Finder',
@@ -70,6 +72,7 @@ const projects = [
       'Serves a community server of about 60 users.',
     ],
     tech: ['TypeScript', 'discord.js', 'Supabase', 'Railway'],
+    live: 'https://discord.com/oauth2/authorize?client_id=1571914145618599956&permissions=268568592&integration_type=0&scope=bot+applications.commands',
   },
 ]
 
