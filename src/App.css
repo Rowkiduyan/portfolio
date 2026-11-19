@@ -1067,7 +1067,24 @@
 .about-layout {
   display: flex;
   gap: 32px;
-  align-items: flex-start;
+  align-items: flex-start; /* photo's top lines up with the first line of text */
+}
+
+/* Center the "About" heading over the round photo (same width as the photo) */
+#about .section-title {
+  width: 160px;
+  text-align: center;
+}
+
+/* Nudge the photo down so it starts at the first line's letters, not the
+   empty space above them that line-height adds */
+.about-photo {
+  margin-top: 6px;
+}
+
+/* No extra space under the last paragraph, so centering isn't thrown off */
+.about-layout .text:last-child {
+  margin-bottom: 0;
 }
 
 .about-photo {
@@ -1087,5 +1104,9 @@
   .about-photo {
     width: 120px;
     height: 120px;
+  }
+  /* Photo is centered on phones, so center the heading across the full width */
+  #about .section-title {
+    width: auto;
   }
 }
