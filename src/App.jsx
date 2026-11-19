@@ -24,6 +24,7 @@ const projects = [
     imageSize: [1400, 665],
     subtitle: 'AI-Powered Driver Drowsiness Monitoring & GPS Tracking',
     type: 'Academic Capstone Project',
+    role: 'Team of 5. I owned the supervisor dashboard: the live GPS map, drowsiness alerts, and integrated Dlib to the raspberry pi.',
     date: 'Feb 2026 – Sep 2026',
     points: [
       'Developed a fleet monitoring web application using React, Supabase, and Raspberry Pi.',
@@ -31,7 +32,8 @@ const projects = [
       'Built GPS trip tracking, route monitoring, fleet management, and role-based interfaces.',
     ],
     tech: ['React', 'Supabase', 'Raspberry Pi'],
-    repo: 'https://github.com/Rowkiduyan/drivewise-system'
+    repo: 'https://github.com/Rowkiduyan/drivewise-system',
+    live: 'https://drivewisesite.tech/',
   },
   {
     title: 'Each-R',
@@ -41,6 +43,7 @@ const projects = [
     imageSize: [1406, 585],
     subtitle: 'Human Resources Information System',
     type: 'Academic Capstone Project',
+    role: 'Team of 4. I owned the Job Application, the employee retirement, and how the documents are passed on to each users.',
     date: 'Apr 2025 – Feb 2026',
     points: [
       'Developed a full-stack HRIS using React and Supabase to centralize employee records and compliance tracking.',
@@ -59,6 +62,7 @@ const projects = [
     imagePosition: 'left center',
     subtitle: 'Discord Bot for Clan War Matchmaking',
     type: 'Personal Project',
+    role: 'Solely implemented the features, how it works, and what it looks like.',
     points: [
       'Built a Discord bot with discord.js and TypeScript that matches clans by size, server, and war format through a queue or a public war board.',
       'Automated match setup: creates a group chat for both clans in the bot\'s server and pings members when the war starts.',
@@ -550,12 +554,35 @@ function App() {
         </section>
 
         <Section id="about" title="About">
-          <p className="text">
-            BSIT student focused on web development with hands-on experience building
-            full-stack applications using React, JavaScript, and Supabase. Developed an
-            HR management system and a real-time fleet monitoring application with GPS
-            tracking and AI-powered drowsiness detection.
-          </p>
+          <div>
+            <img
+              className="about-photo"
+              src="/charles.webp"
+              alt="Charles Roque"
+              width="160"
+              height="160"
+              loading="lazy"
+            />
+
+          </div>
+          <div>
+            <p className="text">
+            I'm an IT student at National University Fairview, 
+            specializing in Mobile and Internet Technologies. 
+            I got into web development because I like seeing an idea turn into 
+            something people actually use.
+            </p>
+            <p classname="text">
+              I build apps that solve a real problem end to end: a fleet monitor that warns drowsy drivers, an HR system, 
+              and a Discord bot that sets up clan wars for a 60-member server. I design how each app works, from features and user flows 
+              to the database, and build with AI tools like Claude. Then I handle the Supabase setup, deployment and testing.
+            </p>
+            <p classname="text">
+              I'm looking for a frontend or full-stack internship or junior developer role where I 
+              can ship real features and grow as a programmer. 
+              I'm based in Metro Manila and open to on-site, hybrid or remote work.
+            </p>
+          </div>
         </Section>
 
         <section id="projects" className="section">
@@ -587,6 +614,9 @@ function App() {
                   <p className="meta">{p.date ? `${p.type} · ${p.date}` : p.type}</p>
                   <h3>{p.title}</h3>
                   <p className="subtitle">{p.subtitle}</p>
+                  {p.role && (
+                    <p className="role"><strong>My Role:</strong> {p.role}</p>
+                  )}
                   <ul>
                     {p.points.map((point) => <li key={point}>{point}</li>)}
                   </ul>

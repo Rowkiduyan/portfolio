@@ -3,7 +3,7 @@ import { MonsterArt } from './ContactMonster.jsx'
 
 // What the monster says when it peeks up in each section.
 const lines = {
-  about: 'Psst! Charles is hardworking and always willing to learn.',
+  about: 'Psst! Charles has shipped 3 projects, and one is used by 60 people.',
   projects: 'Charles builds real apps. Take a peek!',
   awards: "Dean's Lister AND a hackathon podium? Impressive!",
   education: 'Always learning. Graduating in 2027!',
