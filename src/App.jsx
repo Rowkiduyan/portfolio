@@ -24,10 +24,10 @@ const projects = [
     imageSize: [1400, 665],
     subtitle: 'AI-Powered Driver Drowsiness Monitoring & GPS Tracking',
     type: 'Academic Capstone Project',
-    role: 'Team of 5. I owned the supervisor dashboard: the live GPS map, drowsiness alerts, and integrated Dlib to the raspberry pi.',
+    role: 'Team of 5. I owned the supervisor dashboard: the live GPS map, drowsiness alerts, and integrated Dlib to the Raspberry Pi.',
     date: 'Feb 2026 – Sep 2026',
     points: [
-      'Developed a fleet monitoring web application using React, Supabase, and Raspberry Pi.',
+      'Designed a fleet monitoring web application using React, Supabase, and Raspberry Pi.',
       'Implemented drowsiness detection using facial landmarks, EAR, and MAR with automated safety alerts and event logging.',
       'Built GPS trip tracking, route monitoring, fleet management, and role-based interfaces.',
     ],
@@ -43,10 +43,10 @@ const projects = [
     imageSize: [1406, 585],
     subtitle: 'Human Resources Information System',
     type: 'Academic Capstone Project',
-    role: 'Team of 4. I owned the Job Application, the employee retirement, and how the documents are passed on to each users.',
+    role: 'Team of 4. I owned the Job Application, the employee retirement, and how the documents are passed to each users.',
     date: 'Apr 2025 – Feb 2026',
     points: [
-      'Developed a full-stack HRIS using React and Supabase to centralize employee records and compliance tracking.',
+      'Designed a full-stack HRIS using React and Supabase to centralize employee records and compliance tracking.',
       'Implemented automated email notifications using EmailJS to reduce manual HR follow-ups.',
       'Designed Supabase database structures and deployed the application on DigitalOcean.',
     ],
@@ -62,7 +62,7 @@ const projects = [
     imagePosition: 'left center',
     subtitle: 'Discord Bot for Clan War Matchmaking',
     type: 'Personal Project',
-    role: 'Solely implemented the features, how it works, and what it looks like.',
+    role: 'Solo project. I designed the features, matchmaking and look, built it with Claude, and is currently running for a 60-member server.',
     points: [
       'Built a Discord bot with discord.js and TypeScript that matches clans by size, server, and war format through a queue or a public war board.',
       'Automated match setup: creates a group chat for both clans in the bot\'s server and pings members when the war starts.',
@@ -554,7 +554,7 @@ function App() {
         </section>
 
         <Section id="about" title="About">
-          <div>
+          <div className="about-layout">
             <img
               className="about-photo"
               src="/charles.webp"
@@ -564,24 +564,24 @@ function App() {
               loading="lazy"
             />
 
-          </div>
-          <div>
+            <div>
             <p className="text">
-            I'm an IT student at National University Fairview, 
+            I'm an IT student at National University - Fairview, 
             specializing in Mobile and Internet Technologies. 
             I got into web development because I like seeing an idea turn into 
             something people actually use.
             </p>
-            <p classname="text">
+            <p className="text">
               I build apps that solve a real problem end to end: a fleet monitor that warns drowsy drivers, an HR system, 
               and a Discord bot that sets up clan wars for a 60-member server. I design how each app works, from features and user flows 
               to the database, and build with AI tools like Claude. Then I handle the Supabase setup, deployment and testing.
             </p>
-            <p classname="text">
+            <p className="text">
               I'm looking for a frontend or full-stack internship or junior developer role where I 
               can ship real features and grow as a programmer. 
               I'm based in Metro Manila and open to on-site, hybrid or remote work.
             </p>
+            </div>
           </div>
         </Section>
 
