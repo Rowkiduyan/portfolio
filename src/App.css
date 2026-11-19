@@ -249,6 +249,20 @@
   border-color: var(--accent-hover);
 }
 
+.btn-small {
+  min-height: 44px;   /* still big enough to tap on a phone */
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+/* Row of Repo / Live buttons at the bottom of each card */
+.project-links {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;   /* pushes the buttons to the bottom of the card */
+  padding-top: 16px;
+}
+
 /* Sections */
 .section {
   padding: 56px 0;
@@ -330,12 +344,6 @@
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 8px;
-}
-
-.project-shot svg {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 .project-shot img {

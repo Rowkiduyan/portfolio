@@ -31,6 +31,7 @@ const projects = [
       'Built GPS trip tracking, route monitoring, fleet management, and role-based interfaces.',
     ],
     tech: ['React', 'Supabase', 'Raspberry Pi'],
+    repo: 'https://github.com/Rowkiduyan/drivewise-system'
   },
   {
     title: 'Each-R',
@@ -47,19 +48,24 @@ const projects = [
       'Designed Supabase database structures and deployed the application on DigitalOcean.',
     ],
     tech: ['React', 'Supabase', 'EmailJS', 'DigitalOcean'],
+    repo: 'https://github.com/Rowkiduyan/Each-R'
   },
   {
-    title: 'Pawximity Alert',
-    icon: 'petGps',
-    illustration: true,
-    subtitle: 'A Proximity-Based Pet Vest Alert System',
-    type: 'School Project',
-    date: 'Apr 2025 – May 2025',
+    title: 'Gakuran War Finder',
+    icon: 'bot',
+    image: '/projects/gakuran.webp',
+    imageAlt: 'Gakuran War Finder bot menu in Discord with Queue war, War board, My challenges, and My wars buttons',
+    imageSize: [1141, 543],
+    imagePosition: 'left center',
+    subtitle: 'Discord Bot for Clan War Matchmaking',
+    type: 'Personal Project',
     points: [
-      'Developed a Flutter mobile app with Firebase for GPS-based pet tracking and geofence alerts.',
-      'Integrated ESP32 and NEO-6M GPS hardware for location monitoring.',
+      'Built a Discord bot with discord.js and TypeScript that matches clans by size, server, and war format through a queue or a public war board.',
+      'Automated match setup: creates a group chat for both clans in the bot\'s server and pings members when the war starts.',
+      'Added challenges, war booking with reschedule/cancel, and per-clan rules, stored in Supabase and hosted on Railway.',
+      'Serves a community server of about 60 users.',
     ],
-    tech: ['Flutter', 'Firebase', 'ESP32', 'NEO-6M GPS'],
+    tech: ['TypeScript', 'discord.js', 'Supabase', 'Railway'],
   },
 ]
 
@@ -158,17 +164,15 @@ const iconPaths = {
       <path d="M10.5 13.5h4" />
     </>
   ),
-  // Map pin with a paw print
-  petGps: (
+  // Robot head: chat bot
+  bot: (
     <>
-      <path d="M20 10c0 4.99-5.53 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.53 20.19 4 14.99 4 10a8 8 0 0 1 16 0" />
-      <g fill="currentColor" stroke="none">
-        <ellipse cx="12" cy="11.6" rx="2.2" ry="1.8" />
-        <circle cx="9.4" cy="8.9" r="0.95" />
-        <circle cx="11.1" cy="7.3" r="0.95" />
-        <circle cx="12.9" cy="7.3" r="0.95" />
-        <circle cx="14.6" cy="8.9" r="0.95" />
-      </g>
+      <path d="M12 8V4H8" />
+      <rect x="4" y="8" width="16" height="12" rx="2" />
+      <path d="M2 14h2" />
+      <path d="M20 14h2" />
+      <path d="M15 13v2" />
+      <path d="M9 13v2" />
     </>
   ),
   trophy: (
@@ -224,67 +228,6 @@ function Icon({ name, size = 24 }) {
       aria-hidden="true"
     >
       {iconPaths[name]}
-    </svg>
-  )
-}
-
-// Drawn preview for Pawximity Alert (no screenshots available): a map with a
-// geofence around home and a pet pin that has left it.
-function PawximityIllustration() {
-  return (
-    <svg
-      viewBox="0 0 320 180"
-      role="img"
-      aria-label="Illustration of Pawximity Alert: a map with a safe zone around home and a pet outside it, triggering an alert"
-    >
-      <rect width="320" height="180" fill="#0f1729" />
-
-      {/* Streets */}
-      <g stroke="#1c2640" strokeLinecap="round">
-        <path d="M0 122h320" strokeWidth="7" />
-        <path d="M92 0v180" strokeWidth="7" />
-        <path d="M170 180 320 44" strokeWidth="7" />
-        <path d="M0 60h320M0 160h320M40 0v180M150 0v180M250 0v180" strokeWidth="2" />
-      </g>
-
-      {/* Safe zone around home */}
-      <circle cx="140" cy="95" r="52" fill="rgba(124,150,240,0.1)" stroke="#7c96f0" strokeWidth="1.5" strokeDasharray="5 4" />
-      <g transform="translate(130 85) scale(0.85)" fill="none" stroke="#f1f4fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1Z" />
-      </g>
-
-      {/* Path the pet took out of the zone */}
-      <path d="M150 90q40-30 82-34" fill="none" stroke="#7c96f0" strokeWidth="1.5" strokeDasharray="2 4" strokeLinecap="round" />
-
-      {/* Pet location pin */}
-      <g transform="translate(220 22) scale(1.4)">
-        <path
-          d="M20 10c0 4.99-5.53 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.53 20.19 4 14.99 4 10a8 8 0 0 1 16 0"
-          fill="#1e3a8a"
-          stroke="#7c96f0"
-          strokeWidth="1.2"
-        />
-        <g fill="#fff">
-          <ellipse cx="12" cy="11.6" rx="2.2" ry="1.8" />
-          <circle cx="9.4" cy="8.9" r="0.95" />
-          <circle cx="11.1" cy="7.3" r="0.95" />
-          <circle cx="12.9" cy="7.3" r="0.95" />
-          <circle cx="14.6" cy="8.9" r="0.95" />
-        </g>
-      </g>
-
-      {/* Alert notification */}
-      <g>
-        <rect x="12" y="12" width="148" height="28" rx="14" fill="#121826" stroke="#232b3d" />
-        <circle cx="28" cy="26" r="4" fill="#f59e0b" />
-        <text x="40" y="29.5" fill="#f1f4fa" fontSize="10" fontWeight="600" fontFamily="Inter, sans-serif">
-          Pet left the safe zone
-        </text>
-      </g>
-
-      <text x="308" y="170" textAnchor="end" fill="#8b95a9" fontSize="9" fontFamily="Inter, sans-serif">
-        Illustration · ESP32 + NEO-6M GPS
-      </text>
     </svg>
   )
 }
@@ -636,16 +579,12 @@ function App() {
                         height={p.imageSize[1]}
                         loading="lazy"
                         decoding="async"
+                        style={p.imagePosition ? { objectPosition: p.imagePosition } : undefined}
                       />
                     </a>
                   )}
-                  {p.illustration && (
-                    <div className="project-shot">
-                      <PawximityIllustration />
-                    </div>
-                  )}
                   <span className="project-icon"><Icon name={p.icon} size={26} /></span>
-                  <p className="meta">{p.type} · {p.date}</p>
+                  <p className="meta">{p.date ? `${p.type} · ${p.date}` : p.type}</p>
                   <h3>{p.title}</h3>
                   <p className="subtitle">{p.subtitle}</p>
                   <ul>
@@ -654,6 +593,22 @@ function App() {
                   <div className="tags">
                     {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
+                                    {(p.repo || p.live) && (
+                    <div className="project-links">
+                      {p.repo && (
+                        <a className="btn btn-small" href={p.repo} target="_blank" rel="noreferrer"
+                           aria-label={`${p.title} source code on GitHub`}>
+                          Repo
+                        </a>
+                      )}
+                      {p.live && (
+                        <a className="btn btn-small btn-primary" href={p.live} target="_blank" rel="noreferrer"
+                           aria-label={`${p.title} live demo`}>
+                          Live
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
