@@ -64,7 +64,7 @@ const projects = [
     imagePosition: 'left center',
     subtitle: 'Discord Bot for Clan War Matchmaking',
     type: 'Personal Project',
-    role: 'Solo project. I designed the features, matchmaking and look, built it with Claude, and is currently running for a 60-member server.',
+    role: 'Solo project. I designed the features, matchmaking and look, built it with Claude, and is currently running for a 80-member server.',
     points: [
       'Built a Discord bot with discord.js and TypeScript that matches clans by size, server, and war format through a queue or a public war board.',
       'Automated match setup: creates a group chat for both clans in the bot\'s server and pings members when the war starts.',
